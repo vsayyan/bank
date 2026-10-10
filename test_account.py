@@ -73,3 +73,18 @@ def test_savings_inherits_withdraw():
     savings = SavingsAccount("Vahe", 100)
     savings.withdraw(30)
     assert savings.balance == 70
+
+def test_transfer_moves_money():
+    first = Account("First", 100)
+    second = Account("Second", 20)
+    first.transfer(second, 30)
+    assert first.balance == 70
+    assert second.balance == 50
+
+def test_transfer_too_much_keeps_both_balances():
+    first = Account("First", 100)
+    second = Account("Second", 20)
+    with pytest.raises(InsufficientFundsError):
+        first.transfer(second, 500)
+    assert first.balance == 100
+    assert second.balance == 20
