@@ -25,6 +25,10 @@ class Account:
     def __str__(self):
         return f"{self.owner}: {self.balance}"
 
+    def transfer(self,other,amount):
+        self.withdraw(amount)
+        other.deposit(amount)
+
 class SavingsAccount(Account):
     def __init__(self, owner, balance=0,interest_rate=0.05):
         super().__init__(owner,balance)
@@ -34,5 +38,6 @@ class SavingsAccount(Account):
         interest = self.balance * self.interest_rate
         if interest > 0:
             self.deposit(interest)
-            
+
+
         
