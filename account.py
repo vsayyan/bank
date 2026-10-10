@@ -24,3 +24,15 @@ class Account:
         self.balance -= amount
     def __str__(self):
         return f"{self.owner}: {self.balance}"
+
+class SavingsAccount(Account):
+    def __init__(self, owner, balance=0,interest_rate=0.05):
+        super().__init__(owner,balance)
+        self.interest_rate = interest_rate
+
+    def add_interest(self):
+        interest = self.balance * self.interest_rate
+        if interest > 0:
+            self.deposit(interest)
+            
+        

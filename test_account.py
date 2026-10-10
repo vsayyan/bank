@@ -1,6 +1,6 @@
 import pytest 
 
-from account import Account,InsufficientFundsError
+from account import Account,SavingsAccount,InsufficientFundsError
 
 def test_new_account_has_owner_and_balance():
     account = Account("Vahe",100)
@@ -52,3 +52,24 @@ def test_bank_name_is_shared():
 def test_str():
     assert str(Account("Vahe",100)) == "Vahe: 100"
 
+def test_savings_account_is_an_account():
+    savings = SavingsAccount("Vahe",100)
+    assert isinstance(savings,Account)
+
+def test_savings_default_interest_rate():
+    assert SavingsAccount("Vahe",100).interest_rate == 0.05
+
+def test_add_interest():
+    savings = SavingsAccount("Vahe",100,0.1)
+    savings.add_interest()
+    assert savings.balance == pytest.approx(110)
+
+def test_add_interest_with_zero_balance():
+    savings = SavingsAccount("Vahe")
+    savings.add_interest()
+    assert savings.balance == 0
+
+def test_savings_inherits_withdraw():
+    savings = SavingsAccount("Vahe", 100)
+    savings.withdraw(30)
+    assert savings.balance == 70
