@@ -8,12 +8,16 @@ class Account:
         if balance < 0:
             raise ValueError("Initial balance cannot be negative")
         self.owner = owner
-        self.balance = balance
+        self._balance = balance
+
+    @property
+    def balance(self):
+        return self._balance
 
     def deposit(self, amount):
         if amount <= 0:
             raise ValueError("Deposit amount must be positive")
-        self.balance += amount
+        self._balance += amount
 
     def withdraw(self, amount):
         if amount <= 0:
@@ -21,7 +25,7 @@ class Account:
         
         if amount > self.balance:
             raise InsufficientFundsError("Not enough money on the account")
-        self.balance -= amount
+        self._balance -= amount
     def __str__(self):
         return f"{self.owner}: {self.balance}"
 
@@ -35,7 +39,7 @@ class SavingsAccount(Account):
         self.interest_rate = interest_rate
 
     def add_interest(self):
-        interest = self.balance * self.interest_rate
+        interest = self._balance * self.interest_rate
         if interest > 0:
             self.deposit(interest)
 

@@ -88,3 +88,18 @@ def test_transfer_too_much_keeps_both_balances():
         first.transfer(second, 500)
     assert first.balance == 100
     assert second.balance == 20
+
+
+def test_balance_cannot_be_set_directly():
+    account = Account("Vahe", 100)
+
+    with pytest.raises(AttributeError):
+        account.balance = 500
+
+    assert account.balance == 100
+
+
+def test_balance_is_still_readable():
+    account = Account("Vahe", 100)
+
+    assert account.balance == 100
