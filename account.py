@@ -39,7 +39,7 @@ class SavingsAccount(Account):
         self.interest_rate = interest_rate
 
     def add_interest(self):
-        interest = self._balance * self.interest_rate
+        interest = self.balance * self.interest_rate
         if interest > 0:
             self.deposit(interest)
 
